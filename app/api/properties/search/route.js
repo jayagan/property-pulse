@@ -3,9 +3,9 @@ import Property from "@/models/Property";
 
 //Get /api/properties/search
 export const GET = async (request, { params }) => {
+  const { searchParams } = new URL(request.url);
   try {
     await connectDB();
-    const { searchParams } = new URL(request.url);
     const location = searchParams.get("location");
     const propertyType = searchParams.get("propertyType");
     console.log(location, propertyType);
