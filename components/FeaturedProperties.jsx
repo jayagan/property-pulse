@@ -1,35 +1,10 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import Spinner from "./Spinner";
+import React from "react";
+import { fetchFeaturedProperties } from "@/utils/requests";
 import FeaturedPropertyCard from "./FeaturedPropertyCard";
 
-const FeaturedProperties = () => {
-  const [featuredProperties, setFeaturedProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
+const FeaturedProperties = async () => {
+  const featuredProperties = await fetchFeaturedProperties();
 
-  useEffect(() => {
-    const fetchFeaturedProperties = async () => {
-      try {
-        const res = await fetch(`/api/properties/featured`);
-
-        if (res?.status === 200) {
-          const result = await res.json();
-          setFeaturedProperties(result);
-        } else {
-          toast.error("something went wrong");
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFeaturedProperties();
-  }, []);
-
-  if (loading) return <Spinner loading={loading} />;
   return (
     featuredProperties.length && (
       <section className="bg-blue-50 px-4 pt-6 pb-10">

@@ -42,4 +42,24 @@ const fetchProperty = async (id) => {
   }
 };
 
-export { fetchProperties, fetchProperty };
+//Fetch featured properties
+const fetchFeaturedProperties = async () => {
+  try {
+    // Handle case where api domain not available yet
+    if (!apiDomain) {
+      return [];
+    }
+    const res = await fetch(`${apiDomain}/properties/featured`);
+
+    if (!res.ok) {
+      throw new Error("Error fetching data");
+    }
+
+    return res.json();
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export { fetchProperties, fetchProperty, fetchFeaturedProperties };
